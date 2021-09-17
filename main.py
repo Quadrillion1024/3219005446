@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
 # 3219005446 姜珺杨19信息安全1班
 # 编译软件用的个人习惯的jupyter notebook，有分段运行所以可能导致commit的版本比较诡异
 # 软件工程个人项目 论文查重
@@ -13,7 +12,7 @@ import time
 import re
 import os
 
-
+#从路径中获得文本
 def get_file_contents(path):
     string = ''
     f = open(path, 'r', encoding='UTF-8')
@@ -31,9 +30,7 @@ def filter(string):
 	result_text = [i for i in jieba.cut(data, cut_all=False) if i != '']  #分词
 	return result_text
 
-
 #传入过滤数据
-
 def calc_similarity(text1, text2):
     texts = [text1, text2]
     dictionary = gensim.corpora.Dictionary(texts)
@@ -60,6 +57,7 @@ if __name__ == '__main__':
     text1_abs_path = sys.argv[1]
     text2_abs_path = sys.argv[2]
     save_abs_path = sys.argv[3]
+
 #异常处理部分
     if not os.path.exists(text1_abs_path) :
         print("论文原文文件不存在！")
