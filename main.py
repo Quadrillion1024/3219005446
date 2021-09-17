@@ -11,9 +11,8 @@ import gensim
 import sys
 import time
 import re
+import os
 
-#非测试版本的获取文件路径
-#其实是命令行版本
 
 def get_file_contents(path):
     string = ''
@@ -57,10 +56,34 @@ def main_test(text1_abs_path,text2_abs_path):
 
 #命令行版本的获取文件路径
 if __name__ == '__main__':
-    start = time.time()
+#    start = time.time()
     text1_abs_path = sys.argv[1]
     text2_abs_path = sys.argv[2]
     save_abs_path = sys.argv[3]
+#异常处理部分
+    if not os.path.exists(text1_abs_path) :
+        print("论文原文文件不存在！")
+        exit()
+    if not os.path.exists(text2_abs_path):
+        print("抄袭版论文文件不存在！")
+        exit()
+    if not os.path.exists(save_abs_path):
+        print("答案文件文件不存在！")
+        exit()    
+    if text1_abs_path.endswith('.txt')==False:
+        print("原文文件格式错误!")
+        exit()
+    if text2_abs_path.endswith('.txt')==False:
+        print("抄袭版论文文件格式错误!")
+        exit()
+    if save_abs_path.endswith('.txt')==False:
+        print("生成文件格式错误!")
+        exit()
+    if os.path.getsize(text1_abs_path) == 0:
+        print("论文原文文件是空的")
+    if os.path.getsize(text2_abs_path) == 0:
+        print("抄袭版论文文件是空的")
+        
 #命令行参数传入：main.py、[论文原文的文件的绝对路径]、[抄袭版论文的文件的绝对路径]、[输出的答案文件的绝对路径]
     result=main_test(text1_abs_path,text2_abs_path)   
     #在命令行的时候显示结果
@@ -69,5 +92,7 @@ if __name__ == '__main__':
     f = open(save_abs_path, 'w', encoding="utf-8")
     f.write("文章相似度： %.2f"% result)
     f.close()
-    end = time.time()
-    print("运行总时间:",end-start)#计时器
+#    end = time.time()
+#    print("运行总时间:",end-start)
+    
+
